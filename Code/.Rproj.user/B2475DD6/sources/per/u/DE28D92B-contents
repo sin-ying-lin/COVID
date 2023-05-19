@@ -1,0 +1,8 @@
+for(i in c(10,100,1000,1000)){
+  a = sample(c(1:10), i, replace = T)
+  
+  start_time <- Sys.time()
+  new = which(a == 9)
+  end_time <- Sys.time()
+  print(end_time - start_time)
+}

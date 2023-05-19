@@ -1,0 +1,99 @@
+# Required packages (install with install.packages):
+library("qgraph")
+library("dplyr")
+library("devtools")
+library("psych")
+library("graphicalVAR")
+library("psychonetrics")
+
+# Load Data
+str(data)
+OCISx = read.csv('../Results/OCISx.csv')
+str(OCISx)
+levels(OCISx$GMM_Class)
+OCISx$GMM_Class = factor(OCISx$GMM_Class,
+                         levels = c("Treatment refractory (N=71)" ,
+                                    "Moderate baseline symptom, moderate progress (N=160)",
+                                    "High baseline symptom, dramatic progress (N=35)",
+                                    "Moderate baseline symptom, dramatic progress (N=98)"))
+OCISx$ID = c(1:nrow(OCISx))
+covMat = OCISx
+varMat = matrix(colnames(OCISx)[grep('OCI', colnames(OCISx))], nrow = 6, ncol = 3, byrow = F)
+
+# Form models 
+model = panelvar(
+           data = OCISx,
+           vars = varMat [,c(1:3)], 
+           beta = 'full')
+model = model  %>% runmodel
+  
+model_prune = model %>% runmodel %>% 
+           prune(alpha = 0.01, adjust = 'none', recursive = FALSE)
+
+model_prune = model_prune  %>%  modelsearch(prunealpha = 0.01, addalpha = 0.01)
+
+comp = compare(
+    original = model, 
+    pruned = model_prune)
+
+model  %>% parameters
+model_prune  %>% parameters()
+
+# Form models for subgroups:
+for(i in 1:4){
+  assign(paste0('model',i),
+         panelvar(
+           data = OCISx[OCISx$GMM_Class == levels(OCISx$GMM_Class)[i] ,], 
+           vars = varMat))
+  
+  assign(paste0('model',i),
+         get(paste0('model',i)) %>% runmodel)
+  
+  
+  assign(paste0('model_prune', i), 
+         get(paste0('model',i)) %>% runmodel %>% 
+           prune(alpha = 0.01, adjust = 'none', recursive = FALSE))
+  
+  assign(paste0('model_prune', i), 
+          get(paste0('model_prune',i))  %>%  modelsearch(prunealpha = 0.01, addalpha = 0.01))
+  
+  # Compare:
+  assign(paste0('comp',i), compare(
+    original = get(paste0('model',i)),
+    pruned = get(paste0('model_prune',i)))
+  )
+}
+
+
+comp1 #pruned model is better
+comp2 #pruned model is better
+comp3 #pruned model is better
+comp4 #pruned model is better 
+
+model_prune1 %>% fit
+model_prune2 %>% fit
+model_prune3 %>% fit
+model_prune4 %>% fit
+
+model_prune1%>%parameters
+comp
+# Check fit:
+model %>% print
+model %>% fit
+
+
+
+
+
+
+# Differences:
+comp$AIC[1] - comp$AIC[2]
+comp$BIC[1] - comp$BIC[2]
+
+# Check fit:
+model_prune %>% print
+model_prune %>% fit
+model_prune %>% parameters
+
+# Save model:
+saveRDS(model_prune, file="panelResults.RDS")

@@ -1,0 +1,7 @@
+#Exclude Data
+/Data/*
+
+#Exclude invisible files
+*.
+
+

@@ -1,0 +1,17 @@
+"","M(SD)","Min","Max","Gender.F(2 ,1628)","Gender.p","Race.F(5 ,1625)","Race.P","Ethnicity.F(1 ,1629)","Ethnicity.P"
+"baseline","3.07 (1.15)",1,5,NA,NA,NA,NA,NA,NA
+"PHQ.mean","1.99 (0.71)",1,4,NA,NA,NA,NA,NA,NA
+"GAD.mean","2.06 (0.81)",1,4,NA,NA,NA,NA,NA,NA
+"IUS.mean","2.55 (0.86)",1,5,NA,NA,NA,NA,NA,NA
+"PTSD.mean","0.38 (0.36)",0,1,NA,NA,NA,NA,NA,NA
+"overallSev","0 (0.81)",-1.39,2.41,NA,NA,NA,NA,NA,NA
+"probType.anxiety","0.5 (0.5)",0,1,NA,NA,NA,NA,NA,NA
+"probType.depression","0.44 (0.5)",0,1,NA,NA,NA,NA,NA,NA
+"probType.aggression","0.05 (0.21)",0,1,NA,NA,NA,NA,NA,NA
+"probType.attention","0.11 (0.32)",0,1,NA,NA,NA,NA,NA,NA
+"probType.substance","0.03 (0.16)",0,1,NA,NA,NA,NA,NA,NA
+"probType.autism","0.01 (0.1)",0,1,NA,NA,NA,NA,NA,NA
+"probType.relationship","0.22 (0.42)",0,1,NA,NA,NA,NA,NA,NA
+"probType.trauma","0 (NA)",0,0,NA,NA,NA,NA,NA,NA
+"probType.other","0.05 (0.21)",0,1,NA,NA,NA,NA,NA,NA
+"comorbidity","1.41 (1.36)",0,6,NA,NA,NA,NA,NA,NA
